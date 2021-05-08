@@ -818,7 +818,8 @@ class Feed (object):
                     '<body dir="auto">',
                     '<div id="entry">',
                     '<h1 class="header"><a href="{}">{}</a></h1>'.format(
-                        _saxutils.escape(link), _saxutils.escape(subject)),
+                        _saxutils.escape(link) if link else '',
+                        _saxutils.escape(subject)),
                     '<div id="body">',
                     ])
             if content['type'] in ('text/html', 'application/xhtml+xml'):
@@ -828,7 +829,8 @@ class Feed (object):
             lines.append('</div>')
             lines.extend([
                     '<div class="footer">'
-                    '<p>URL: <a href="{0}">{0}</a></p>'.format(_saxutils.escape(link)),
+                    '<p>URL: <a href="{0}">{0}</a></p>'.format(
+                        _saxutils.escape(link) if link else 'None'),
                     ])
             for enclosure in getattr(entry, 'enclosures', []):
                 if getattr(enclosure, 'url', None):
